@@ -1277,9 +1277,7 @@ if page == "🏠 Home":
 
     ✅ Download molecular reports
 
-    ✅ Compare multiple molecules
-
-    ✅ Complete an assessment
+    
     """)
 
     st.markdown("### Example Molecules")
@@ -1288,32 +1286,32 @@ if page == "🏠 Home":
 
         "Molecule": [
 
-            "Ethanol",
+            "Methanol",
 
-            "Benzene",
+            "Toluene",
 
-            "Phenol",
+            "Aniline",
 
-            "Acetic Acid",
+            "Benzoic Acid",
 
-            "Aspirin",
+            "Paracetamol",
 
-            "Caffeine"
+            "Glucose"
         ],
 
         "SMILES": [
 
-            "CCO",
+            "CO",
 
-            "c1ccccc1",
+            "Cc1ccccc1",
 
-            "Oc1ccccc1",
+            "Nc1ccccc1",
 
             "CC(=O)O",
 
-            "CC(=O)Oc1ccccc1C(=O)O",
+            "c1ccc(cc1)C(=O)O",
 
-            "CN1C=NC2=C1C(=O)N(C(=O)N2C)C"
+            "OC[C@H]1OC(O)[C@H](O)[C@@H](O)[C@@H]1OC"
         ]
     })
 
