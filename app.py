@@ -208,7 +208,96 @@ def calculate_bond_information(mol):
 # CALCULATE COMPLETE MOLECULAR PROPERTIES
 # ============================================================
 
-def calculate_properties(mol):
+def calculate_properties(mol, smiles=None):
+
+    # Calculate bond information
+    bond_info = calculate_bond_information(mol)
+
+    molecular_formula = rdMolDescriptors.CalcMolFormula(mol)
+
+    properties = {
+
+        "Molecular Formula": molecular_formula,
+
+        "Molecular Weight": round(
+            Descriptors.MolWt(mol),
+            3
+        ),
+
+        "Exact Molecular Weight": round(
+            Descriptors.ExactMolWt(mol),
+            4
+        ),
+
+        "LogP": round(
+            Crippen.MolLogP(mol),
+            3
+        ),
+
+        "TPSA": round(
+            rdMolDescriptors.CalcTPSA(mol),
+            3
+        ),
+
+        "Hydrogen Bond Donors": Lipinski.NumHDonors(mol),
+
+        "Hydrogen Bond Acceptors": Lipinski.NumHAcceptors(mol),
+
+        "Rotatable Bonds": Lipinski.NumRotatableBonds(mol),
+
+        "Ring Count": Lipinski.RingCount(mol),
+
+        "Aromatic Rings": rdMolDescriptors.CalcNumAromaticRings(mol),
+
+        "Aliphatic Rings": rdMolDescriptors.CalcNumAliphaticRings(mol),
+
+        "Number of Atoms": mol.GetNumAtoms(),
+
+        "Heavy Atoms": mol.GetNumHeavyAtoms(),
+
+        # Bond information
+        "Heavy Atom Bonds": bond_info["Heavy Atom Bonds"],
+
+        "Sigma (σ) Bonds": bond_info["Sigma Bonds"],
+
+        "Pi (π) Bonds": bond_info["Pi Bonds"],
+
+        "Total Bonds (σ + π)": bond_info["Total Bonds"],
+
+        "Fraction Csp3": round(
+            rdMolDescriptors.CalcFractionCSP3(mol),
+            3
+        ),
+
+        "Molar Refractivity": round(
+            Crippen.MolMR(mol),
+            3
+        )
+    }
+
+    # --- Fetch Melting Point, Boiling Point, State & Solubility ---
+    lookup_str = smiles if smiles else Chem.MolToSmiles(mol)
+    exp_data = get_experimental_by_smiles(lookup_str, mol)
+    if exp_data:
+        properties["Melting Point (°C)"] = exp_data.get("mp", "—")
+        properties["Boiling Point (°C)"] = exp_data.get("bp", "—")
+        properties["Physical State (25°C)"] = exp_data.get("state", "—")
+        properties["Water Solubility"] = exp_data.get("solubility", "—")
+        properties["Density (g/cm³)"] = exp_data.get("density", "—")
+    else:
+        properties["Melting Point (°C)"] = "—"
+        properties["Boiling Point (°C)"] = "—"
+        properties["Physical State (25°C)"] = "Solid" if mol.GetNumHeavyAtoms() > 10 else "Liquid / Gas"
+        properties["Water Solubility"] = "—"
+        properties["Density (g/cm³)"] = "—"
+
+    # Intermolecular force breakdown
+    imf = analyze_intermolecular_forces(mol, properties, exp_data)
+    properties["Primary Intermolecular Force"] = imf.get("primary_force", "London Dispersion Forces")
+
+    return properties
+    
+    def calculate_properties(mol):
 
     # Calculate bond information
     bond_info = calculate_bond_information(mol)
