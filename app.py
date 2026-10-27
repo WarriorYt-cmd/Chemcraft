@@ -298,6 +298,7 @@ def calculate_properties(mol, smiles=None):
     return properties
 
 
+
     
     def calculate_properties(mol):
 
