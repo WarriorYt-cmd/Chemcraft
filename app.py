@@ -259,7 +259,6 @@ def calculate_properties(mol, smiles=None):
 
     
     def calculate_properties(mol, smiles=None):
-
     # Calculate bond information
     bond_info = calculate_bond_information(mol)
 
