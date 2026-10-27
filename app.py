@@ -253,7 +253,12 @@ def calculate_properties(mol, smiles=None):
     imf = analyze_intermolecular_forces(mol, properties, exp_data)
     properties["Primary Intermolecular Force"] = imf.get("primary_force", "London Dispersion Forces")
 
-    return propertiesdef calculate_properties(mol, smiles=None):
+    return properties
+
+
+
+    
+    def calculate_properties(mol, smiles=None):
 
     # Calculate bond information
     bond_info = calculate_bond_information(mol)
