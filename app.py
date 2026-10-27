@@ -296,6 +296,8 @@ def calculate_properties(mol, smiles=None):
     properties["Primary Intermolecular Force"] = imf.get("primary_force", "London Dispersion Forces")
 
     return properties
+
+
     
     def calculate_properties(mol):
 
