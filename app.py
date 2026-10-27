@@ -1210,14 +1210,9 @@ page = st.sidebar.radio(
 
 st.sidebar.divider()
 
-st.sidebar.markdown("### 👩‍🎓 Student Information")
-student_name = st.sidebar.text_input("Student Name", key="student_name")
-registration_number = st.sidebar.text_input("Registration Number", key="registration_number")
 
 st.sidebar.markdown("""
-### 🎓 Learning Objectives
-
-Students can learn:
+### WHAT WILL YOU GET :
 
 - SMILES notation
 - Molecular representation
