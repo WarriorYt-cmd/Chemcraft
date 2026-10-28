@@ -78,9 +78,10 @@ MINECRAFT_THEME = True
 # YOUR DETAILS  (edit only the text inside the quotes)
 # ============================================================
 APP_AUTHOR = "PRIYA SAHU"                    # e.g. "Priya Sharma"
-APP_ROLE = "B.TECH CSE AI ML"                        # e.g. "B.Tech Student"
-
+APP_ROLE = "Student"                        # e.g. "B.Tech Student"
+APP_DEPARTMENT = "BTECH CSE AI ML"          # e.g. "Department of Chemistry"
 APP_ORGANISATION = "SRMIST TRICHY"
+
 
 if MINECRAFT_THEME:
     from minecraft_theme import apply_minecraft_theme
