@@ -209,7 +209,9 @@ def calculate_bond_information(mol):
 # CALCULATE COMPLETE MOLECULAR PROPERTIES
 # ============================================================
 
-def calculate_properties(mol):
+from molecule_data import get_experimental
+
+def calculate_properties(mol, molecule_name=None):
 
     # Calculate bond information
     bond_info = calculate_bond_information(mol)
@@ -276,8 +278,23 @@ def calculate_properties(mol):
         )
     }
 
-    return properties
+    # ---- ADD EXPERIMENTAL PHYSICAL PROPERTIES IF AVAILABLE ----
+    if molecule_name:
+        exp = get_experimental(molecule_name)
+        if exp:
+            properties["Melting Point (°C)"] = exp["mp"]
+            properties["Boiling Point (°C)"] = exp["bp"]
+            properties["Density (g/cm³)"] = exp["density"]
+            properties["State at 25°C"] = exp["state"]
+            properties["Water Solubility"] = exp["solubility"]
+        else:
+            properties["Melting Point (°C)"] = "—"
+            properties["Boiling Point (°C)"] = "—"
+            properties["Density (g/cm³)"] = "—"
+            properties["State at 25°C"] = "—"
+            properties["Water Solubility"] = "—"
 
+    return properties
 
 
 #============================================================
