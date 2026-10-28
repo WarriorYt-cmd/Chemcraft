@@ -900,6 +900,53 @@ def get_property_interpretation(property_name, value, properties):
     return "This descriptor provides additional quantitative information about the molecular structure and physicochemical behaviour."
 
 
+
+# ============================================================
+# CHEMBOT AI ASSISTANT SIDEBAR WIDGET
+# ============================================================
+
+
+st.sidebar.divider()
+st.sidebar.markdown("### 🤖 ChemBot AI Assistant")
+
+from ai_assistant import ask_ai
+
+# Initialize chat history in session state
+if "ai_messages" not in st.session_state:
+    st.session_state.ai_messages = []
+
+# Display chat history in an expander or container
+with st.sidebar.expander("💬 Chat with ChemBot", expanded=False):
+    st.caption("Ask chemistry or app-related questions!")
+    
+    # Display past messages
+    for msg in st.session_state.ai_messages:
+        if msg["role"] == "user":
+            st.markdown(f"**You:** {msg['content']}")
+        else:
+            st.markdown(f"**ChemBot:** {msg['content']}")
+
+    # User input form
+    user_query = st.text_input("Ask ChemBot anything...", key="chembot_input_field")
+    
+    if st.button("Send to ChemBot"):
+        if user_query.strip():
+            # Append user message
+            st.session_state.ai_messages.append({"role": "user", "content": user_query})
+            
+            # Pull current molecule context if available
+            active_mol_context = ""
+            if "latest_smiles" in st.session_state:
+                active_mol_context = f"SMILES: {st.session_state.latest_smiles}"
+            
+            # Call AI
+            success, reply = ask_ai(st.session_state.ai_messages, molecule_context=active_mol_context)
+            
+            if success:
+                st.session_state.ai_messages.append({"role": "assistant", "content": reply})
+                st.rerun()
+            else:
+                st.error(reply)
 def build_key_interpretation_points(properties):
     """Create concise point-wise conclusions for the final report."""
     points = []
