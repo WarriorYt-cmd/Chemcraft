@@ -1326,9 +1326,12 @@ if page == "🏠 Home":
 
     st.divider()
 
-    st.markdown("### 👩‍💻 Developed by")
-    st.markdown("**PRIYA SAHU**")
-    
+    st.markdown("### 👨‍💻 Developed by")
+    st.markdown(f"**{APP_AUTHOR}**")
+    st.markdown(f"{APP_ROLE}  ")
+    st.markdown(f"{APP_DEPARTMENT}  ")
+    st.markdown(f"{APP_ORGANISATION}")
+
    
     
 
