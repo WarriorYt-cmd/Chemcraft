@@ -1545,10 +1545,9 @@ Provides a simplified representation of the molecule.
 
 
 # Automatically generate and display the 3D structure
-        with st.spinner("Generating interactive 3D model..."):
-            mol3d = generate_3d_molecule(mol)
-
-        if mol3d is None:
+ with st.spinner("Generating interactive 3D model..."):
+     mol3d = generate_3d_molecule(mol)
+ if mol3d is None:
             st.error("Unable to generate the 3D structure for this molecule.")
         else:
             st.subheader("🌐 Interactive 3D Rotating Molecular Model")
@@ -1567,6 +1566,8 @@ Provides a simplified representation of the molecule.
                 enable_spin = st.checkbox("🔄 Auto-Rotate / Spin", value=True, key="vis_spin")
 
             display_3d_structure(mol3d, visualization_style, show_surface, enable_spin)
+        
+        
     
 # ============================================================
 # COMPLETE MOLECULAR PROPERTIES REPORT
