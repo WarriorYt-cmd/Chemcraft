@@ -2052,6 +2052,77 @@ Enter one molecule per line in the format:
             mime="text/csv",
             key="download_structure_property_csv"
         )
+    # ============================================================
+# 100+ MOLECULE MASTER TABLE & PRINTABLE VIEW
+# ============================================================
+
+elif page == "📚 100+ Molecule Master Table":
+
+    st.title("📚 100+ Molecule Master Reference Table")
+    st.info("This comprehensive table compiles all 100+ molecules from your library, combining RDKit calculated descriptors with experimental physical properties. Use the buttons below to export or print the entire 100+ molecule dataset in one go.")
+
+    @st.cache_data
+    def build_master_table_data():
+        master_rows = []
+        for category, items in VALID_LIBRARY.items():
+            for name, smiles in items.items():
+                mol = get_molecule(smiles)
+                if mol:
+                    props = calculate_properties(mol)
+                    exp = get_experimental(name) or {}
+                    master_rows.append({
+                        "Category": category,
+                        "Molecule": name,
+                        "SMILES": smiles,
+                        "Formula": props["Molecular Formula"],
+                        "MW (g/mol)": props["Molecular Weight"],
+                        "LogP": props["LogP"],
+                        "TPSA (Å²)": props["TPSA"],
+                        "HBD": props["Hydrogen Bond Donors"],
+                        "HBA": props["Hydrogen Bond Acceptors"],
+                        "State (25°C)": exp.get("state", "—"),
+                        "Melting Pt (°C)": exp.get("mp", "—"),
+                        "Boiling Pt (°C)": exp.get("bp", "—"),
+                    })
+        return pd.DataFrame(master_rows)
+
+    with st.spinner("Compiling 100+ molecule library data..."):
+        master_df = build_master_table_data()
+
+    st.success(f"Successfully loaded {len(master_df)} molecules across {len(master_df['Category'].unique())} categories!")
+
+    # Search / Filter Box
+    search_query = st.text_input("🔍 Search Master Table (by Molecule Name or Category)", "")
+    if search_query:
+        filtered_df = master_df[
+            master_df["Molecule"].str.contains(search_query, case=False, na=False) |
+            master_df["Category"].str.contains(search_query, case=False, na=False)
+        ]
+    else:
+        filtered_df = master_df
+
+    st.dataframe(filtered_df, use_container_width=True, hide_index=True)
+
+    col1, col2 = st.columns(2)
+    with col1:
+        csv_master = master_df.to_csv(index=False).encode("utf-8")
+        st.download_button(
+            "⬇️ Download Complete 100+ Molecule Master Table (CSV)",
+            data=csv_master,
+            file_name="ChemCraft_100_Molecule_Master_Table.csv",
+            mime="text/csv"
+        )
+    with col2:
+        if st.button("🖨️ Print Complete Table"):
+            st.markdown(
+                """
+                <script>
+                window.print();
+                </script>
+                """,
+                unsafe_allow_html=True
+            )
+            st.info("Print dialog triggered! You can save as a PDF or print all 100+ rows directly.")    
 
     else:
         st.warning("Please enter at least one valid molecule in the format: Molecule Name, SMILES")
