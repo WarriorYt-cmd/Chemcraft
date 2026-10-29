@@ -392,10 +392,10 @@ def generate_3d_molecule(mol):
 
 
 # ============================================================
-# DISPLAY 3D STRUCTURE
+# DISPLAY 3D STRUCTURE (Updated with Auto-Spin & Rotation)
 # ============================================================
 
-def display_3d_structure(mol3d, style, show_surface=False):
+def display_3d_structure(mol3d, style, show_surface=False, enable_spin=False):
 
     mol_block = Chem.MolToMolBlock(mol3d)
 
@@ -409,6 +409,37 @@ def display_3d_structure(mol3d, style, show_surface=False):
         "mol"
     )
 
+    # --------------------------------------------------------
+    # STYLES
+    # --------------------------------------------------------
+    if style == "Ball and Stick":
+        view.setStyle({"stick": {"radius": 0.15}, "sphere": {"scale": 0.30}})
+    elif style == "Stick":
+        view.setStyle({"stick": {"radius": 0.20}})
+    elif style == "Space Filling":
+        view.setStyle({"sphere": {"scale": 1.0}})
+    elif style == "Wireframe":
+        view.setStyle({"line": {"linewidth": 2}})
+    elif style == "Cartoon":
+        view.setStyle({"stick": {}, "sphere": {"scale": 0.20}})
+
+    if show_surface:
+        view.addSurface(py3Dmol.VDW, {"opacity": 0.7})
+
+    view.setBackgroundColor("black" if MINECRAFT_THEME else "white")
+    view.zoomTo()
+
+    # --- ENABLE CONTINUOUS ROTATION IF CHECKED ---
+    if enable_spin:
+        view.spin(True)
+
+    html = view._make_html()
+
+    components.html(
+        html,
+        height=620,
+        scrolling=False
+    )
     # --------------------------------------------------------
     # BALL AND STICK
     # --------------------------------------------------------
