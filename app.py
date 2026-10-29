@@ -1251,8 +1251,8 @@ page = st.sidebar.radio(
         "📊 Molecular Properties Report",
 
         "📈 Structure–Property Analysis",
-
         
+        "📚 100+ Molecule Master Table",  # <--- ADD THIS LINE HERE
 
     ]
 )
