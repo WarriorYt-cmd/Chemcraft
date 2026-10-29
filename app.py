@@ -2052,7 +2052,7 @@ Enter one molecule per line in the format:
             mime="text/csv",
             key="download_structure_property_csv"
         )
-    # ============================================================
+# ============================================================
 # 100+ MOLECULE MASTER TABLE & PRINTABLE VIEW
 # ============================================================
 
@@ -2124,11 +2124,6 @@ elif page == "📚 100+ Molecule Master Table":
             )
             st.info("Print dialog triggered! You can save as a PDF or print all 100+ rows directly.")    
 
-    ")
-
-       
-  
- 
 # ============================================================
 # FOOTER
 # ============================================================
