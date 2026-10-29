@@ -1551,7 +1551,7 @@ Provides a simplified representation of the molecule.
 elif page == "🧬 Molecular Visualization":
 
     st.subheader("🌐 Interactive 3D Rotating Molecular Model")
-        st.caption("🖱️ Click and drag your mouse over the 3D viewer to rotate manually, or check the box below to spin it automatically!")
+    st.caption("🖱️ Click and drag your mouse over the 3D viewer to rotate manually, or check the box below to spin it automatically!")
 
         col_3d_1, col_3d_2, col_3d_3 = st.columns(3)
         with col_3d_1:
@@ -1573,7 +1573,7 @@ elif page == "🧬 Molecular Visualization":
             st.error("Unable to generate the 3D structure for this molecule.")
         else:
             display_3d_structure(mol3d, visualization_style, show_surface, enable_spin)
-
+    
 # ============================================================
 # COMPLETE MOLECULAR PROPERTIES REPORT
 # ============================================================
