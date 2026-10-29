@@ -1546,7 +1546,65 @@ Provides a simplified representation of the molecule.
 
 st.divider()
 
- # Automatically generate and display the 3D structure
+elif page == "🧬 Molecular Visualization":
+
+    st.title("🧬 Molecular Visualization Laboratory")
+    st.info("Enter any SMILES notation or load an example. The interactive 3D rotating model and 2D structure will generate automatically.")
+
+    col1, col2 = st.columns([2, 1])
+
+    with col1:
+        smiles = st.text_input(
+            "Enter SMILES",
+            key="active_smiles"
+        )
+
+    with col2:
+        st.selectbox(
+            "Choose Example Molecule",
+            list(EXAMPLE_MOLECULES.keys()),
+            key="selected_example"
+        )
+
+        st.button(
+            "Load Example",
+            on_click=load_shared_example,
+            key="load_visualization_example"
+        )
+
+    mol = get_molecule(smiles)
+
+    if mol is None:
+        st.error("❌ Invalid SMILES notation.")
+    else:
+        st.success("✅ Valid Molecular Structure!")
+        st.session_state.latest_smiles = smiles
+        st.session_state.latest_properties = calculate_properties(mol)
+
+        col_1, col_2 = st.columns([1.2, 1])
+
+        with col_1:
+            st.subheader("2D Molecular Structure")
+            image = generate_2d_image(mol)
+            st.image(image)
+
+        with col_2:
+            st.subheader("Molecular Information")
+            st.write("**Input SMILES:**", smiles)
+            st.write("**Canonical SMILES:**", Chem.MolToSmiles(mol))
+            st.write("**Formula:**", rdMolDescriptors.CalcMolFormula(mol))
+
+            bond_info = calculate_bond_information(mol)
+            st.write("**Heavy Atoms:**", mol.GetNumHeavyAtoms())
+            st.write("**Total Atoms (incl. H):**", bond_info["Total Atoms Including H"])
+            st.write("**Sigma (σ) Bonds:**", bond_info["Sigma Bonds"])
+            st.write("**Pi (π) Bonds:**", bond_info["Pi Bonds"])
+
+        st.divider()
+
+        ###################################################################  
+
+        
         with st.spinner("Generating interactive 3D model..."):
             mol3d = generate_3d_molecule(mol)
 
@@ -1568,8 +1626,7 @@ st.divider()
             with col_3d_3:
                 enable_spin = st.checkbox("🔄 Auto-Rotate / Spin", value=True, key="vis_spin")
 
-            display_3d_structure(mol3d, visualization_style, show_surface, enable_spin)       
-        
+            display_3d_structure(mol3d, visualization_style, show_surface, enable_spin)
     
 # ============================================================
 # COMPLETE MOLECULAR PROPERTIES REPORT
