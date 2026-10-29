@@ -21,6 +21,7 @@ import streamlit.components.v1 as components
 # PDF
 from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
+from molecule_data import get_experimental
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY
 from reportlab.lib.colors import HexColor
