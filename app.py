@@ -1548,30 +1548,24 @@ Provides a simplified representation of the molecule.
 # MOLECULAR VISUALIZATION PAGE
 # ============================================================
 
-elif page == "🧬 Molecular Visualization":
-
-    st.subheader("🌐 Interactive 3D Rotating Molecular Model")
-    st.caption("🖱️ Click and drag your mouse over the 3D viewer to rotate manually, or check the box below to spin it automatically!")
-
-        col_3d_1, col_3d_2, col_3d_3 = st.columns(3)
-        with col_3d_1:
-            visualization_style = st.selectbox(
-                "Select Model Style",
-                ["Ball and Stick", "Stick", "Space Filling", "Wireframe", "Cartoon"],
-                key="vis_3d_style"
-            )
-        with col_3d_2:
-            show_surface = st.checkbox("Show van der Waals Surface", key="vis_surface")
-        with col_3d_3:
-            enable_spin = st.checkbox("🔄 Auto-Rotate / Spin", value=True, key="vis_spin")
-
-        # Automatically generate and display the 3D structure
-        with st.spinner("Generating interactive 3D model..."):
-            mol3d = generate_3d_molecule(mol)
-
         if mol3d is None:
             st.error("Unable to generate the 3D structure for this molecule.")
         else:
+            st.subheader("🌐 Interactive 3D Rotating Molecular Model")
+            st.caption("🖱️ Click and drag your mouse over the 3D viewer to rotate manually, or check the box below to spin it automatically!")
+
+            col_3d_1, col_3d_2, col_3d_3 = st.columns(3)
+            with col_3d_1:
+                visualization_style = st.selectbox(
+                    "Select Model Style",
+                    ["Ball and Stick", "Stick", "Space Filling", "Wireframe", "Cartoon"],
+                    key="vis_3d_style"
+                )
+            with col_3d_2:
+                show_surface = st.checkbox("Show van der Waals Surface", key="vis_surface")
+            with col_3d_3:
+                enable_spin = st.checkbox("🔄 Auto-Rotate / Spin", value=True, key="vis_spin")
+
             display_3d_structure(mol3d, visualization_style, show_surface, enable_spin)
     
 # ============================================================
