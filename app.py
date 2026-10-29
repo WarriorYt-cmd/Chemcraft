@@ -1548,7 +1548,7 @@ Provides a simplified representation of the molecule.
 # MOLECULAR VISUALIZATION PAGE
 # ============================================================
 
-        if mol3d is None:
+  if mol3d is None:
             st.error("Unable to generate the 3D structure for this molecule.")
         else:
             st.subheader("🌐 Interactive 3D Rotating Molecular Model")
