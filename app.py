@@ -244,6 +244,24 @@ def calculate_properties(mol):
     bond_info = calculate_bond_information(mol)
 
     molecular_formula = rdMolDescriptors.CalcMolFormula(mol)
+    canonical_smi = Chem.MolToSmiles(mol)
+
+    # Find matching experimental data from molecule_data.py if available
+    exp_data = None
+    try:
+        from molecule_data import EXPERIMENTAL, get_experimental
+        from molecules import flat_library
+        # Reverse lookup molecule name from SMILES
+        flat_lib = flat_library()
+        matched_name = None
+        for name, smi in flat_lib.items():
+            if Chem.MolToSmiles(Chem.MolFromSmiles(smi)) == canonical_smi:
+                matched_name = name
+                break
+        if matched_name:
+            exp_data = get_experimental(matched_name)
+    except Exception:
+        pass
 
     properties = {
 
@@ -302,13 +320,17 @@ def calculate_properties(mol):
         "Molar Refractivity": round(
             Crippen.MolMR(mol),
             3
-        )
+        ),
+
+        # --- NEW PHYSICAL & EXPERIMENTAL PROPERTIES ---
+        "Physical State (25°C)": exp_data["state"] if exp_data else "—",
+        "Melting Point": f"{exp_data['mp']} °C" if exp_data and exp_data['mp'] != "—" else "—",
+        "Boiling Point": f"{exp_data['bp']} °C" if exp_data and exp_data['bp'] != "—" else "—",
+        "Density": f"{exp_data['density']} g/cm³" if exp_data and exp_data['density'] != "—" else "—",
+        "Water Solubility": exp_data["solubility"] if exp_data else "—"
     }
 
     return properties
-
-     
-
 #============================================================
 # GENERATE 2D IMAGE
 # ============================================================
