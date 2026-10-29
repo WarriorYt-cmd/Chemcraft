@@ -52,53 +52,47 @@ st.set_page_config(
 
 
 # ============================================================
-# CUSTOM CSS & MODERN TYPOGRAPHY
+# CUSTOM CSS & ENHANCED TYPOGRAPHY
 # ============================================================
 
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
 
-/* Global Font Update */
-html, body, [class*="st-"] {
-    font-family: 'Inter', sans-serif !important;
-}
-
+/* Make the Main Page Title bigger and glowing */
 .main-title {
     text-align: center;
-    font-family: 'Outfit', sans-serif !important;
-    font-size: 40px;
-    font-weight: 800;
-    color: #fcfc54;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    margin-bottom: 5px;
+    font-size: 46px !important;
+    font-weight: 800 !important;
+    color: #fcfc54 !important;
+    text-shadow: 3px 3px 0px #3f3f15, 0px 0px 15px rgba(252, 252, 84, 0.5);
+    margin-bottom: 10px;
 }
 
-.section-title, h1, h2, h3 {
-    font-family: 'Outfit', sans-serif !important;
-    font-weight: 700;
+/* Make Sidebar Title (ChemCraft Lab) much bigger and more noticeable */
+[data-testid="stSidebar"] h1 {
+    font-size: 28px !important;
+    color: #55ff55 !important;
+    text-shadow: 3px 3px 0px #153f15;
+    font-family: 'Press Start 2P', monospace !important;
+    letter-spacing: 1px;
+    padding-bottom: 5px;
 }
 
-/* Modern Card & Metric Styling */
+/* Enhance Sidebar headers / text readability */
+[data-testid="stSidebar"] .stMarkdown h3 {
+    font-size: 1.1rem !important;
+    color: #ffaa00 !important;
+    text-shadow: 2px 2px 0px #3f2a00;
+}
+
+/* Smooth Metric Card Styling */
 [data-testid="stMetric"] {
-    background: rgba(40, 40, 40, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-}
-
-/* Smooth Button Styling */
-.stButton > button {
-    border-radius: 10px;
-    font-family: 'Outfit', sans-serif !important;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.stButton > button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(85, 255, 85, 0.3);
+    background: rgba(45, 45, 45, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 </style>
 """, unsafe_allow_html=True)
