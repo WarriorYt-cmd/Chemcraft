@@ -52,56 +52,56 @@ st.set_page_config(
 
 
 # ============================================================
-# CUSTOM CSS & ENHANCED TYPOGRAPHY
+# CUSTOM CSS & MODERN TYPOGRAPHY
 # ============================================================
 
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap');
 
-/* Main app smooth font styling */
+/* Global Font Update */
 html, body, [class*="st-"] {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Inter', sans-serif !important;
 }
 
 .main-title {
     text-align: center;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 38px;
-    font-weight: 700;
-    letter-spacing: 1px;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 40px;
+    font-weight: 800;
+    color: #fcfc54;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     margin-bottom: 5px;
 }
 
-.section-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 22px;
-    font-weight: 600;
+.section-title, h1, h2, h3 {
+    font-family: 'Outfit', sans-serif !important;
+    font-weight: 700;
 }
 
-/* Enhancing metric card layouts */
+/* Modern Card & Metric Styling */
 [data-testid="stMetric"] {
-    background: rgba(45, 45, 45, 0.6);
+    background: rgba(40, 40, 40, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 14px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
 }
 
-/* Smooth button styling */
+/* Smooth Button Styling */
 .stButton > button {
-    border-radius: 8px;
+    border-radius: 10px;
+    font-family: 'Outfit', sans-serif !important;
     font-weight: 600;
     transition: all 0.3s ease;
 }
 
 .stButton > button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(93, 161, 48, 0.4);
+    box-shadow: 0 5px 15px rgba(85, 255, 85, 0.3);
 }
 </style>
 """, unsafe_allow_html=True)
-
 # ---- Minecraft theme (set to False for the plain look) ----
 MINECRAFT_THEME = True
 
