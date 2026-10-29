@@ -116,7 +116,12 @@ if MINECRAFT_THEME:
 # ============================================================
 # HELPER FUNCTIONS
 # ============================================================
-
+def get_molecule_name_from_smiles(target_smiles):
+    """Find the library name of a molecule given its SMILES string."""
+    for name, smi in EXAMPLE_MOLECULES.items():
+        if smi.strip() == target_smiles.strip():
+            return name
+    return None
 # ============================================================
 # SHARED MOLECULE INPUT STATE
 # ============================================================
