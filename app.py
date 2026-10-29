@@ -1550,156 +1550,29 @@ Provides a simplified representation of the molecule.
 
 elif page == "🧬 Molecular Visualization":
 
-    st.title("🧬 Molecular Visualization Laboratory")
+    st.subheader("🌐 Interactive 3D Rotating Molecular Model")
+        st.caption("🖱️ Click and drag your mouse over the 3D viewer to rotate manually, or check the box below to spin it automatically!")
 
-    st.info("Enter a new SMILES or load an example. The selected molecule will be used across the laboratory pages.")
-
-    col1, col2 = st.columns([2, 1])
-
-    with col1:
-        smiles = st.text_input(
-            "Enter SMILES",
-            key="active_smiles"
-        )
-
-    with col2:
-        st.selectbox(
-            "Choose Example Molecule",
-            list(EXAMPLE_MOLECULES.keys()),
-            key="selected_example"
-        )
-
-        st.button(
-            "Load Example",
-            on_click=load_shared_example,
-            key="load_visualization_example"
-        )
-
-    # Keep the latest valid molecule available for the other pages.
-    mol = get_molecule(smiles)
-
-    if mol is None:
-
-        st.error("❌ Invalid SMILES notation.")
-
-    else:
-
-        st.success("✅ Valid Molecular Structure!")
-        st.session_state.latest_smiles = smiles
-        st.session_state.latest_properties = calculate_properties(mol)
-
-        col1, col2 = st.columns([1.2, 1])
-
-        with col1:
-
-            st.subheader("2D Molecular Structure")
-
-            image = generate_2d_image(mol)
-
-            st.image(image)
-
-        with col2:
-
-            st.subheader("Molecular Information")
-
-            st.write(
-                "**Input SMILES:**",
-                smiles
+        col_3d_1, col_3d_2, col_3d_3 = st.columns(3)
+        with col_3d_1:
+            visualization_style = st.selectbox(
+                "Select Model Style",
+                ["Ball and Stick", "Stick", "Space Filling", "Wireframe", "Cartoon"],
+                key="vis_3d_style"
             )
+        with col_3d_2:
+            show_surface = st.checkbox("Show van der Waals Surface", key="vis_surface")
+        with col_3d_3:
+            enable_spin = st.checkbox("🔄 Auto-Rotate / Spin", value=True, key="vis_spin")
 
-            st.write(
-                "**Canonical SMILES:**",
-                Chem.MolToSmiles(mol)
-            )
+        # Automatically generate and display the 3D structure
+        with st.spinner("Generating interactive 3D model..."):
+            mol3d = generate_3d_molecule(mol)
 
-            st.write(
-                "**Formula:**",
-                rdMolDescriptors.CalcMolFormula(mol)
-            )
-
-            bond_info = calculate_bond_information(mol)
-
-            st.write(
-                "**Heavy Atoms:**",
-                mol.GetNumHeavyAtoms()
-            )
-
-            st.write(
-                "**Total Atoms (including H):**",
-                bond_info["Total Atoms Including H"]
-            )
-
-            st.write(
-                "**Heavy-Atom Bonds:**",
-                bond_info["Heavy Atom Bonds"]
-            )
-
-            st.write(
-                "**Sigma (σ) Bonds:**",
-                bond_info["Sigma Bonds"]
-            )
-
-            st.write(
-                "**Pi (π) Bonds:**",
-                bond_info["Pi Bonds"]
-            )
-
-            st.write(
-                "**Total Bonds (σ + π):**",
-                bond_info["Total Bonds"]
-            )
-
-        st.divider()
-
-        st.subheader("🌐 Interactive 3D Molecular Structure")
-
-        visualization_style = st.selectbox(
-
-            "Select Molecular Model",
-
-            [
-
-                "Ball and Stick",
-
-                "Stick",
-
-                "Space Filling",
-
-                "Wireframe",
-
-                "Cartoon"
-            ]
-        )
-
-        show_surface = st.checkbox(
-            "Show van der Waals Surface"
-        )
-
-        if st.button("🚀 Generate 3D Structure"):
-
-            with st.spinner(
-                "Generating 3D molecular structure..."
-            ):
-
-                mol3d = generate_3d_molecule(mol)
-
-            if mol3d is None:
-
-                st.error(
-                    "Unable to generate the 3D structure."
-                )
-
-            else:
-
-                display_3d_structure(
-
-                    mol3d,
-
-                    visualization_style,
-
-                    show_surface
-                )
-
+        if mol3d is None:
+            st.error("Unable to generate the 3D structure for this molecule.")
+        else:
+            display_3d_structure(mol3d, visualization_style, show_surface, enable_spin)
 
 # ============================================================
 # COMPLETE MOLECULAR PROPERTIES REPORT
