@@ -2124,8 +2124,7 @@ elif page == "📚 100+ Molecule Master Table":
             )
             st.info("Print dialog triggered! You can save as a PDF or print all 100+ rows directly.")    
 
-    else:
-        st.warning("Please enter at least one valid molecule in the format: Molecule Name, SMILES")
+    ")
 
        
   
