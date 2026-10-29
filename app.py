@@ -1602,7 +1602,7 @@ elif page == "🧬 Molecular Visualization":
 
         st.divider()
 
-        ###################################################################  
+        
 
         
         with st.spinner("Generating interactive 3D model..."):
